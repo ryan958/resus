@@ -20,6 +20,10 @@ const defaultEquations = {
     sugammadex: 'weight * 16',
     flumazenil: 'weight * 5',
     naloxone: 'weight * 10',
+    'inotrope-adrenaline': 'weight * 0.05',
+    'inotrope-noradrenaline': 'weight * 0.05',
+    dobutamine: 'weight * 2',
+    dopamine: 'weight * 2',
     'nebulized-adrenaline': '5',
     dexamethasone: 'weight * 0.3',
     hydrocortisone: 'weight * 4',
@@ -63,6 +67,10 @@ const resultElements = {
     sugammadex: document.getElementById('sugammadex-result'),
     flumazenil: document.getElementById('flumazenil-result'),
     naloxone: document.getElementById('naloxone-result'),
+    'inotrope-adrenaline': document.getElementById('inotrope-adrenaline-result'),
+    'inotrope-noradrenaline': document.getElementById('inotrope-noradrenaline-result'),
+    dobutamine: document.getElementById('dobutamine-result'),
+    dopamine: document.getElementById('dopamine-result'),
     'nebulized-adrenaline': document.getElementById('nebulized-adrenaline-result'),
     dexamethasone: document.getElementById('dexamethasone-result'),
     hydrocortisone: document.getElementById('hydrocortisone-result'),
@@ -181,6 +189,10 @@ function calculateAll() {
         sugammadex: safeEval(currentEquations.sugammadex, { age, weight }),
         flumazenil: safeEval(currentEquations.flumazenil, { age, weight }),
         naloxone: safeEval(currentEquations.naloxone, { age, weight }),
+        'inotrope-adrenaline': safeEval(currentEquations['inotrope-adrenaline'], { age, weight }),
+        'inotrope-noradrenaline': safeEval(currentEquations['inotrope-noradrenaline'], { age, weight }),
+        dobutamine: safeEval(currentEquations.dobutamine, { age, weight }),
+        dopamine: safeEval(currentEquations.dopamine, { age, weight }),
         'nebulized-adrenaline': safeEval(currentEquations['nebulized-adrenaline'], { age, weight }),
         dexamethasone: safeEval(currentEquations.dexamethasone, { age, weight }),
         hydrocortisone: safeEval(currentEquations.hydrocortisone, { age, weight }),
@@ -255,6 +267,14 @@ function formatValue(type, value) {
             return value.toFixed(0) + ' microg';
         case 'naloxone':
             return value.toFixed(0) + ' mg';
+        case 'inotrope-adrenaline':
+            return value.toFixed(0) + ' microg/min';
+        case 'inotrope-noradrenaline':
+            return value.toFixed(0) + ' microg/min';
+        case 'dobutamine':
+            return value.toFixed(0) + ' microg/min';
+        case 'dopamine':
+            return value.toFixed(0) + ' microg/min';
         case 'nebulized-adrenaline':
             return value.toFixed(0) + ' mL';
         case 'dexamethasone':
