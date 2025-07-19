@@ -7,7 +7,7 @@ const defaultEquations = {
     defib: 'weight * 4',
     fluid: 'weight * 20',
     glucose: 'weight * 2',
-    amiodarone: 'weight * 25',
+    amiodarone: 'weight * 5',
     adenosine: 'weight * 0.1',
     atropine: 'weight * 20',
     fentanyl: 'weight * 5',
@@ -30,7 +30,7 @@ const defaultEquations = {
     methylprednisolone: 'weight * 1',
     magnesium: 'weight * 0.2',
     salbutamol: 'weight * 15',
-    'midazolam-iv': 'weight * 0.1',
+    'midazolam-iv': 'weight * 0.15',
     'midazolam-im': 'weight * 0.2',
     'midazolam-in': 'weight * 0.3',
     levetiracetam: 'weight * 60',
@@ -38,7 +38,9 @@ const defaultEquations = {
     'fentanyl-iv': 'weight * 1',
     morphine: 'weight * 0.1',
     blood: 'weight * 10',
-    tranexamic: 'weight * 15'
+    tranexamic: 'weight * 15',
+    'adrenaline-push': 'weight * 0.1',
+    cardioversion: 'weight * 1'
 };
 
 // Current equations (can be customized)
@@ -46,6 +48,7 @@ let currentEquations = { ...defaultEquations };
 
 // DOM elements
 const ageInput = document.getElementById('age-input');
+const weightInput = document.getElementById('weight-input');
 const resultElements = {
     weight: document.getElementById('weight-result'),
     ett: document.getElementById('ett-result'),
@@ -85,7 +88,9 @@ const resultElements = {
     'fentanyl-iv': document.getElementById('fentanyl-iv-result'),
     morphine: document.getElementById('morphine-result'),
     blood: document.getElementById('blood-result'),
-    tranexamic: document.getElementById('tranexamic-result')
+    tranexamic: document.getElementById('tranexamic-result'),
+    'adrenaline-push': document.getElementById('adrenaline-push-result'),
+    cardioversion: document.getElementById('cardioversion-result')
 };
 
 // Initialize the app
@@ -100,6 +105,12 @@ function setupEventListeners() {
     ageInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             ageInput.blur();
+        }
+    });
+    weightInput.addEventListener('input', calculateAll);
+    weightInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            weightInput.blur();
         }
     });
 }
@@ -151,27 +162,39 @@ function safeEval(expression, variables) {
     }
 }
 
-// Calculate all values based on age
+// Calculate all values based on age and/or actual weight
 function calculateAll() {
     const age = parseFloat(ageInput.value);
+    const actualWeight = parseFloat(weightInput.value);
     
-    if (isNaN(age) || age < 0 || age > 18) {
+    if ((isNaN(age) || age < 0 || age > 18) && (isNaN(actualWeight) || actualWeight <= 0)) {
         clearResults();
         return;
     }
     
-    // Calculate weight first (needed for other calculations)
-    const weight = safeEval(currentEquations.weight, { age });
-    if (weight === null) {
+    // Use actual weight if provided, otherwise estimate from age
+    let weight;
+    if (!isNaN(actualWeight) && actualWeight > 0) {
+        weight = actualWeight;
+    } else {
+        weight = safeEval(currentEquations.weight, { age });
+    }
+    if (weight === null || isNaN(weight) || weight <= 0) {
         showMessage('Error calculating weight', 'error');
         return;
+    }
+
+    // Estimate age from weight if age is missing for ETT calculations
+    let ettAge = age;
+    if ((isNaN(age) || age === 0) && (!isNaN(weight) && weight > 0)) {
+        ettAge = (weight - 8) / 2;
     }
     
     // Calculate all other values
     const calculations = {
         weight: weight,
-        ett: safeEval(currentEquations.ett, { age }),
-        'ett-depth': safeEval(currentEquations['ett-depth'], { age }),
+        ett: safeEval(currentEquations.ett, { age: ettAge }),
+        'ett-depth': safeEval(currentEquations['ett-depth'], { age: ettAge }),
         adrenaline: safeEval(currentEquations.adrenaline, { age, weight }),
         defib: safeEval(currentEquations.defib, { age, weight }),
         fluid: safeEval(currentEquations.fluid, { age, weight }),
@@ -179,10 +202,10 @@ function calculateAll() {
         amiodarone: safeEval(currentEquations.amiodarone, { age, weight }),
         adenosine: safeEval(currentEquations.adenosine, { age, weight }),
         atropine: safeEval(currentEquations.atropine, { age, weight }),
-        fentanyl: safeEval(currentEquations.fentanyl, { age, weight }),
-        ketamine: safeEval(currentEquations.ketamine, { age, weight }),
-        propofol: safeEval(currentEquations.propofol, { age, weight }),
-        midazolam: safeEval(currentEquations.midazolam, { age, weight }),
+        fentanyl: { min: weight * 2, max: weight * 5 },
+        ketamine: { min: weight * 1, max: weight * 2 },
+        propofol: { min: weight * 2, max: weight * 3 },
+        midazolam: { min: weight * 0.1, max: weight * 0.2 },
         rocuronium: safeEval(currentEquations.rocuronium, { age, weight }),
         suxamethonium: safeEval(currentEquations.suxamethonium, { age, weight }),
         vecuronium: safeEval(currentEquations.vecuronium, { age, weight }),
@@ -204,10 +227,12 @@ function calculateAll() {
         'midazolam-in': safeEval(currentEquations['midazolam-in'], { age, weight }),
         levetiracetam: safeEval(currentEquations.levetiracetam, { age, weight }),
         'fentanyl-in': safeEval(currentEquations['fentanyl-in'], { age, weight }),
-        'fentanyl-iv': safeEval(currentEquations['fentanyl-iv'], { age, weight }),
-        morphine: safeEval(currentEquations.morphine, { age, weight }),
+        'fentanyl-iv': { min: weight * 0.5, max: weight * 1 },
+        morphine: { min: weight * 0.05, max: weight * 0.1 },
         blood: safeEval(currentEquations.blood, { age, weight }),
-        tranexamic: safeEval(currentEquations.tranexamic, { age, weight })
+        tranexamic: safeEval(currentEquations.tranexamic, { age, weight }),
+        'adrenaline-push': safeEval(currentEquations['adrenaline-push'], { age, weight }),
+        cardioversion: safeEval(currentEquations.cardioversion, { age, weight })
     };
     
     // Update display
@@ -226,7 +251,7 @@ function updateResults(calculations) {
 
 // Format values for display
 function formatValue(type, value) {
-    // Handle range objects for inotropes
+    // Handle range objects for inotropes and induction medications
     if (typeof value === 'object' && value.min !== undefined && value.max !== undefined) {
         switch (type) {
             case 'inotrope-adrenaline':
@@ -235,6 +260,18 @@ function formatValue(type, value) {
             case 'dobutamine':
             case 'dopamine':
                 return value.min.toFixed(0) + ' - ' + value.max.toFixed(0) + ' microg/min';
+            case 'fentanyl':
+                return value.min.toFixed(0) + ' - ' + value.max.toFixed(0) + ' microg';
+            case 'ketamine':
+                return value.min.toFixed(0) + ' - ' + value.max.toFixed(0) + ' mg';
+            case 'propofol':
+                return value.min.toFixed(0) + ' - ' + value.max.toFixed(0) + ' mg';
+            case 'midazolam':
+                return value.min.toFixed(1) + ' - ' + value.max.toFixed(1) + ' mg';
+            case 'fentanyl-iv':
+                return value.min.toFixed(1) + ' - ' + value.max.toFixed(1) + ' microg';
+            case 'morphine':
+                return value.min.toFixed(2) + ' - ' + value.max.toFixed(1) + ' mg';
             default:
                 return value.min.toFixed(1) + ' - ' + value.max.toFixed(1);
         }
@@ -245,7 +282,7 @@ function formatValue(type, value) {
         case 'weight':
             return value.toFixed(1) + ' kg';
         case 'ett':
-            return Math.round(value * 2) / 2 + '';
+            return Math.floor(value * 2) / 2 + '';
         case 'ett-depth':
             return value.toFixed(1) + ' cm';
         case 'adrenaline':
@@ -257,7 +294,7 @@ function formatValue(type, value) {
         case 'glucose':
             return value.toFixed(0) + ' mL';
         case 'amiodarone':
-            return value.toFixed(0) + ' microg/min';
+            return value.toFixed(0) + ' mg';
         case 'adenosine':
             return value.toFixed(1) + ' mg';
         case 'atropine':
@@ -281,7 +318,7 @@ function formatValue(type, value) {
         case 'flumazenil':
             return value.toFixed(0) + ' microg';
         case 'naloxone':
-            return value.toFixed(0) + ' mg';
+            return value.toFixed(0) + ' microg';
         case 'nebulized-adrenaline':
             return value.toFixed(0) + ' mL';
         case 'dexamethasone':
@@ -291,7 +328,7 @@ function formatValue(type, value) {
         case 'methylprednisolone':
             return value.toFixed(0) + ' mg';
         case 'magnesium':
-            return value.toFixed(1) + ' g';
+            return value.toFixed(1) + ' mmol';
         case 'salbutamol':
             return value.toFixed(0) + ' microg';
         case 'midazolam-iv':
@@ -312,6 +349,10 @@ function formatValue(type, value) {
             return value.toFixed(0) + ' mL';
         case 'tranexamic':
             return value.toFixed(0) + ' mg';
+        case 'adrenaline-push':
+            return value.toFixed(1) + ' mL';
+        case 'cardioversion':
+            return value.toFixed(0) + ' J';
         default:
             return value.toFixed(1);
     }
