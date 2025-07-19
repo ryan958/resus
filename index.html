@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric Resuscitation Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showPage('calculator')">Calculator</button>
+            <button class="nav-tab" onclick="showPage('settings')">Settings</button>
+        </nav>
+
+        <!-- Calculator Page -->
+        <div id="calculator-page" class="page active">
+            <h1>Pediatric Resuscitation Calculator</h1>
+            
+            <div class="input-section">
+                <label for="age-input">Age (years):</label>
+                <input type="number" id="age-input" placeholder="Enter age" step="0.1" min="0" max="18">
+            </div>
+
+            <div class="results-section">
+                <h2>Calculated Doses</h2>
+                
+                <div class="result-item">
+                    <label>Weight (kg):</label>
+                    <span id="weight-result">-</span>
+                </div>
+
+                <!-- Resuscitation Section -->
+                <div class="section-header">
+                    <h3>🔄 Resuscitation</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Adrenaline (1:10,000):</label>
+                    <span id="adrenaline-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Defibrillation (J):</label>
+                    <span id="defib-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Fluid Bolus (mL):</label>
+                    <span id="fluid-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Glucose 10% (mL):</label>
+                    <span id="glucose-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Amiodarone load (4 hrs):</label>
+                    <span id="amiodarone-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Adenosine:</label>
+                    <span id="adenosine-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Atropine:</label>
+                    <span id="atropine-result">-</span>
+                </div>
+
+                <!-- Intubation Section -->
+                <div class="section-header">
+                    <h3>🫁 Intubation</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>ETT Size:</label>
+                    <span id="ett-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>ETT Length (cm):</label>
+                    <span id="ett-depth-result">-</span>
+                </div>
+
+                <!-- Induction Section -->
+                <div class="section-header">
+                    <h3>💉 Induction</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Fentanyl:</label>
+                    <span id="fentanyl-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Ketamine:</label>
+                    <span id="ketamine-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Propofol:</label>
+                    <span id="propofol-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Midazolam:</label>
+                    <span id="midazolam-result">-</span>
+                </div>
+
+                <!-- Paralysis Section -->
+                <div class="section-header">
+                    <h3>🦴 Paralysis</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Rocuronium:</label>
+                    <span id="rocuronium-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Suxamethonium:</label>
+                    <span id="suxamethonium-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Vecuronium:</label>
+                    <span id="vecuronium-result">-</span>
+                </div>
+
+                <!-- Reversal Section -->
+                <div class="section-header">
+                    <h3>🔄 Reversal</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Sugammadex:</label>
+                    <span id="sugammadex-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Flumazenil:</label>
+                    <span id="flumazenil-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Naloxone:</label>
+                    <span id="naloxone-result">-</span>
+                </div>
+
+                <!-- Respiratory Section -->
+                <div class="section-header">
+                    <h3>🫁 Respiratory</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Nebulized Adrenaline:</label>
+                    <span id="nebulized-adrenaline-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Dexamethasone:</label>
+                    <span id="dexamethasone-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Hydrocortisone:</label>
+                    <span id="hydrocortisone-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Methylprednisolone:</label>
+                    <span id="methylprednisolone-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Magnesium Sulfate:</label>
+                    <span id="magnesium-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>IV Salbutamol:</label>
+                    <span id="salbutamol-result">-</span>
+                </div>
+
+                <!-- Neurology Section -->
+                <div class="section-header">
+                    <h3>🧠 Neurology</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Midazolam IV:</label>
+                    <span id="midazolam-iv-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Midazolam IM:</label>
+                    <span id="midazolam-im-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Midazolam IN:</label>
+                    <span id="midazolam-in-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Levetiracetam:</label>
+                    <span id="levetiracetam-result">-</span>
+                </div>
+
+                <!-- Analgesia Section -->
+                <div class="section-header">
+                    <h3>💊 Analgesia</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Fentanyl IN:</label>
+                    <span id="fentanyl-in-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Fentanyl IV:</label>
+                    <span id="fentanyl-iv-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Morphine IV:</label>
+                    <span id="morphine-result">-</span>
+                </div>
+
+                <!-- Trauma Section -->
+                <div class="section-header">
+                    <h3>🩸 Trauma</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Blood (mL):</label>
+                    <span id="blood-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Tranexamic Acid:</label>
+                    <span id="tranexamic-result">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="page">
+            <h1>Calculation Settings</h1>
+            <p>Customize the equations used for calculations. Use 'age' and 'weight' as variables.</p>
+            
+            <!-- Weight Section -->
+            <div class="settings-section">
+                <h2>Weight Calculation</h2>
+                <label for="weight-equation">Equation:</label>
+                <input type="text" id="weight-equation" placeholder="e.g., age * 2 + 8">
+                <button onclick="saveEquation('weight')">Save</button>
+            </div>
+
+            <!-- Resuscitation Section -->
+            <div class="settings-section">
+                <h2>🔄 Resuscitation</h2>
+                
+                <div class="equation-group">
+                    <label for="adrenaline-equation">Adrenaline (1:10,000):</label>
+                    <input type="text" id="adrenaline-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('adrenaline')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="defib-equation">Defibrillation:</label>
+                    <input type="text" id="defib-equation" placeholder="e.g., weight * 4">
+                    <button onclick="saveEquation('defib')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="fluid-equation">Fluid Bolus:</label>
+                    <input type="text" id="fluid-equation" placeholder="e.g., weight * 20">
+                    <button onclick="saveEquation('fluid')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="glucose-equation">Glucose 10%:</label>
+                    <input type="text" id="glucose-equation" placeholder="e.g., weight * 5">
+                    <button onclick="saveEquation('glucose')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="amiodarone-equation">Amiodarone:</label>
+                    <input type="text" id="amiodarone-equation" placeholder="e.g., weight * 5">
+                    <button onclick="saveEquation('amiodarone')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="adenosine-equation">Adenosine:</label>
+                    <input type="text" id="adenosine-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('adenosine')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="atropine-equation">Atropine:</label>
+                    <input type="text" id="atropine-equation" placeholder="e.g., weight * 0.02">
+                    <button onclick="saveEquation('atropine')">Save</button>
+                </div>
+            </div>
+
+            <!-- Intubation Section -->
+            <div class="settings-section">
+                <h2>🫁 Intubation</h2>
+                
+                <div class="equation-group">
+                    <label for="ett-equation">ETT Size:</label>
+                    <input type="text" id="ett-equation" placeholder="e.g., (age / 4) + 4">
+                    <button onclick="saveEquation('ett')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="ett-depth-equation">ETT Length:</label>
+                    <input type="text" id="ett-depth-equation" placeholder="e.g., age / 2 + 12">
+                    <button onclick="saveEquation('ett-depth')">Save</button>
+                </div>
+            </div>
+
+            <!-- Induction Section -->
+            <div class="settings-section">
+                <h2>💉 Induction</h2>
+                
+                <div class="equation-group">
+                    <label for="fentanyl-equation">Fentanyl:</label>
+                    <input type="text" id="fentanyl-equation" placeholder="e.g., weight * 1">
+                    <button onclick="saveEquation('fentanyl')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="ketamine-equation">Ketamine:</label>
+                    <input type="text" id="ketamine-equation" placeholder="e.g., weight * 2">
+                    <button onclick="saveEquation('ketamine')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="propofol-equation">Propofol:</label>
+                    <input type="text" id="propofol-equation" placeholder="e.g., weight * 2.5">
+                    <button onclick="saveEquation('propofol')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="midazolam-equation">Midazolam:</label>
+                    <input type="text" id="midazolam-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('midazolam')">Save</button>
+                </div>
+            </div>
+
+            <!-- Paralysis Section -->
+            <div class="settings-section">
+                <h2>🦴 Paralysis</h2>
+                
+                <div class="equation-group">
+                    <label for="rocuronium-equation">Rocuronium:</label>
+                    <input type="text" id="rocuronium-equation" placeholder="e.g., weight * 1">
+                    <button onclick="saveEquation('rocuronium')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="suxamethonium-equation">Suxamethonium:</label>
+                    <input type="text" id="suxamethonium-equation" placeholder="e.g., weight * 2">
+                    <button onclick="saveEquation('suxamethonium')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="vecuronium-equation">Vecuronium:</label>
+                    <input type="text" id="vecuronium-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('vecuronium')">Save</button>
+                </div>
+            </div>
+
+            <!-- Reversal Section -->
+            <div class="settings-section">
+                <h2>🔄 Reversal</h2>
+                
+                <div class="equation-group">
+                    <label for="sugammadex-equation">Sugammadex:</label>
+                    <input type="text" id="sugammadex-equation" placeholder="e.g., weight * 2">
+                    <button onclick="saveEquation('sugammadex')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="flumazenil-equation">Flumazenil:</label>
+                    <input type="text" id="flumazenil-equation" placeholder="e.g., weight * 0.01">
+                    <button onclick="saveEquation('flumazenil')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="naloxone-equation">Naloxone:</label>
+                    <input type="text" id="naloxone-equation" placeholder="e.g., weight * 0.01">
+                    <button onclick="saveEquation('naloxone')">Save</button>
+                </div>
+            </div>
+
+            <!-- Respiratory Section -->
+            <div class="settings-section">
+                <h2>🫁 Respiratory</h2>
+                
+                <div class="equation-group">
+                    <label for="nebulized-adrenaline-equation">Nebulized Adrenaline:</label>
+                    <input type="text" id="nebulized-adrenaline-equation" placeholder="e.g., weight * 0.5">
+                    <button onclick="saveEquation('nebulized-adrenaline')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="dexamethasone-equation">Dexamethasone:</label>
+                    <input type="text" id="dexamethasone-equation" placeholder="e.g., weight * 0.15">
+                    <button onclick="saveEquation('dexamethasone')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="hydrocortisone-equation">Hydrocortisone:</label>
+                    <input type="text" id="hydrocortisone-equation" placeholder="e.g., weight * 2">
+                    <button onclick="saveEquation('hydrocortisone')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="methylprednisolone-equation">Methylprednisolone:</label>
+                    <input type="text" id="methylprednisolone-equation" placeholder="e.g., weight * 1">
+                    <button onclick="saveEquation('methylprednisolone')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="magnesium-equation">Magnesium Sulfate:</label>
+                    <input type="text" id="magnesium-equation" placeholder="e.g., weight * 0.2">
+                    <button onclick="saveEquation('magnesium')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="salbutamol-equation">IV Salbutamol:</label>
+                    <input type="text" id="salbutamol-equation" placeholder="e.g., weight * 0.15">
+                    <button onclick="saveEquation('salbutamol')">Save</button>
+                </div>
+            </div>
+
+            <!-- Neurology Section -->
+            <div class="settings-section">
+                <h2>🧠 Neurology</h2>
+                
+                <div class="equation-group">
+                    <label for="midazolam-iv-equation">Midazolam IV:</label>
+                    <input type="text" id="midazolam-iv-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('midazolam-iv')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="midazolam-im-equation">Midazolam IM:</label>
+                    <input type="text" id="midazolam-im-equation" placeholder="e.g., weight * 0.2">
+                    <button onclick="saveEquation('midazolam-im')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="midazolam-in-equation">Midazolam IN:</label>
+                    <input type="text" id="midazolam-in-equation" placeholder="e.g., weight * 0.3">
+                    <button onclick="saveEquation('midazolam-in')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="levetiracetam-equation">Levetiracetam:</label>
+                    <input type="text" id="levetiracetam-equation" placeholder="e.g., weight * 20">
+                    <button onclick="saveEquation('levetiracetam')">Save</button>
+                </div>
+            </div>
+
+            <!-- Analgesia Section -->
+            <div class="settings-section">
+                <h2>💊 Analgesia</h2>
+                
+                <div class="equation-group">
+                    <label for="fentanyl-in-equation">Fentanyl IN:</label>
+                    <input type="text" id="fentanyl-in-equation" placeholder="e.g., weight * 1.5">
+                    <button onclick="saveEquation('fentanyl-in')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="fentanyl-iv-equation">Fentanyl IV:</label>
+                    <input type="text" id="fentanyl-iv-equation" placeholder="e.g., weight * 1">
+                    <button onclick="saveEquation('fentanyl-iv')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="morphine-equation">Morphine IV:</label>
+                    <input type="text" id="morphine-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('morphine')">Save</button>
+                </div>
+            </div>
+
+            <!-- Trauma Section -->
+            <div class="settings-section">
+                <h2>🩸 Trauma</h2>
+                
+                <div class="equation-group">
+                    <label for="blood-equation">Blood:</label>
+                    <input type="text" id="blood-equation" placeholder="e.g., weight * 10">
+                    <button onclick="saveEquation('blood')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="tranexamic-equation">Tranexamic Acid:</label>
+                    <input type="text" id="tranexamic-equation" placeholder="e.g., weight * 15">
+                    <button onclick="saveEquation('tranexamic')">Save</button>
+                </div>
+            </div>
+            
+            <div class="settings-actions">
+                <button onclick="resetToDefaults()" class="reset-btn">Reset to Defaults</button>
+                <button onclick="loadSettings()" class="load-btn">Load Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
