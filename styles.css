@@ -134,14 +134,22 @@ h3 {
 
 .result-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 12px 0;
     border-bottom: 1px solid #e9ecef;
 }
 
 .result-item:last-child {
     border-bottom: none;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 4px;
 }
 
 .result-item label {
@@ -395,4 +403,24 @@ h3 {
     .nav-tab.active {
         background: #000;
     }
+} 
+
+.note-field {
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    background: #fafbfc;
+    color: #555;
+    box-sizing: border-box;
+    display: none;
+    min-height: 1em;
+    word-break: break-word;
+}
+
+.note-field:not(:empty) {
+    display: block;
 } 
