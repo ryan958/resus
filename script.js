@@ -236,7 +236,7 @@ function formatValue(type, value) {
         case 'atropine':
             return value.toFixed(0) + ' microg';
         case 'fentanyl':
-            return value.toFixed(0) + ' mcg';
+            return value.toFixed(0) + ' microg';
         case 'ketamine':
             return value.toFixed(0) + ' mg';
         case 'propofol':
@@ -276,9 +276,9 @@ function formatValue(type, value) {
         case 'levetiracetam':
             return value.toFixed(0) + ' mg';
         case 'fentanyl-in':
-            return value.toFixed(1) + ' mcg';
+            return value.toFixed(0) + ' microg';
         case 'fentanyl-iv':
-            return value.toFixed(1) + ' mcg';
+            return value.toFixed(0) + ' microg';
         case 'morphine':
             return value.toFixed(1) + ' mg';
         case 'blood':
