@@ -21,14 +21,19 @@
             <div class="input-section">
                 <label for="age-input">Age (years):</label>
                 <input type="number" id="age-input" placeholder="Enter age" step="0.1" min="0" max="18">
+                <label for="weight-input" style="margin-top:12px;">Actual Weight (kg) (optional):</label>
+                <input type="number" id="weight-input" placeholder="Enter actual weight if known" step="0.1" min="0">
             </div>
 
             <div class="results-section">
                 <h2>Calculated Doses</h2>
                 
                 <div class="result-item">
-                    <label>Weight (kg):</label>
-                    <span id="weight-result">-</span>
+                    <div class="result-row">
+                        <label>Weight (kg):</label>
+                        <span id="weight-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
 
                 <!-- Resuscitation Section -->
@@ -37,38 +42,75 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Adrenaline (1:10,000):</label>
-                    <span id="adrenaline-result">-</span>
+                    <div class="result-row">
+                        <label>Adrenaline (1:10,000):</label>
+                        <span id="adrenaline-result">-</span>
+                    </div>
+                    <div class="note-field">At <strong>100microg/mL</strong> dilution</div>
+                </div>
+                
+                
+                <div class="result-item">
+                    <div class="result-row">
+                        <label>Defibrillation:</label>
+                        <span id="defib-result">-</span>
+                    </div>
+                    <div class="note-field">Round up energy level to next highest setting on defibrillator</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-row">
+                        <label>Synchronised Cardioversion:</label>
+                        <span id="cardioversion-result">-</span>
+                    </div>
+                    <div class="note-field">Round up energy level to next highest setting on defibrillator - double for second attempt</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Defibrillation (J):</label>
-                    <span id="defib-result">-</span>
+                    <div class="result-row">
+                        <label>Fluid Bolus:</label>
+                        <span id="fluid-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Fluid Bolus (mL):</label>
-                    <span id="fluid-result">-</span>
+                    <div class="result-row">
+                        <label>Glucose 10%:</label>
+                        <span id="glucose-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Glucose 10% (mL):</label>
-                    <span id="glucose-result">-</span>
+                    <div class="result-row">
+                        <label>Amiodarone:</label>
+                        <span id="amiodarone-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 150mg to 15mL in glucose 5% - Push over 5 mins</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Amiodarone load (4 hrs):</label>
-                    <span id="amiodarone-result">-</span>
+                    <div class="result-row">
+                        <label>Adenosine:</label>
+                        <span id="adenosine-result">-</span>
+                    </div>
+                    <div class="note-field">Increase by 0.1mg/kg per dose for up to 2 subsequent doses</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Adenosine:</label>
-                    <span id="adenosine-result">-</span>
+                    <div class="result-row">
+                        <label>Atropine:</label>
+                        <span id="atropine-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
-                
+
                 <div class="result-item">
-                    <label>Atropine:</label>
-                    <span id="atropine-result">-</span>
+                    <div class="result-row">
+                        <label>Adrenaline (Push dose pressor, 1:100,000):</label>
+                        <span id="adrenaline-push-result">-</span>
+                    </div>
+                    <div class="note-field">At <strong>10microg/mL</strong> dilution</div>
                 </div>
 
                 <!-- Intubation Section -->
@@ -77,13 +119,19 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>ETT Size:</label>
-                    <span id="ett-result">-</span>
+                    <div class="result-row">
+                        <label>ETT Size:</label>
+                        <span id="ett-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
                 
                 <div class="result-item">
-                    <label>ETT Length (cm):</label>
-                    <span id="ett-depth-result">-</span>
+                    <div class="result-row">
+                        <label>ETT Length at lips:</label>
+                        <span id="ett-depth-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
 
                 <!-- Induction Section -->
@@ -92,23 +140,35 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Fentanyl:</label>
-                    <span id="fentanyl-result">-</span>
+                    <div class="result-row">
+                        <label>Fentanyl:</label>
+                        <span id="fentanyl-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 100microg to 10mL - Push over 1 - 3 mins</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Ketamine:</label>
-                    <span id="ketamine-result">-</span>
+                    <div class="result-row">
+                        <label>Ketamine:</label>
+                        <span id="ketamine-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 200mg to 20mL -Push over 60 seconds</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Propofol:</label>
-                    <span id="propofol-result">-</span>
+                    <div class="result-row">
+                        <label>Propofol:</label>
+                        <span id="propofol-result">-</span>
+                    </div>
+                    <div class="note-field">Undiluted -Push over 30 seconds</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Midazolam:</label>
-                    <span id="midazolam-result">-</span>
+                    <div class="result-row">
+                        <label>Midazolam:</label>
+                        <span id="midazolam-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute to 1 mg/mL - Push over 2-3 minutes</div>
                 </div>
 
                 <!-- Paralysis Section -->
@@ -117,18 +177,27 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Rocuronium:</label>
-                    <span id="rocuronium-result">-</span>
+                    <div class="result-row">
+                        <label>Rocuronium:</label>
+                        <span id="rocuronium-result">-</span>
+                    </div>
+                    <div class="note-field">Undiluted</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Suxamethonium:</label>
-                    <span id="suxamethonium-result">-</span>
+                    <div class="result-row">
+                        <label>Suxamethonium:</label>
+                        <span id="suxamethonium-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 100mg to mL</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Vecuronium:</label>
-                    <span id="vecuronium-result">-</span>
+                    <div class="result-row">
+                        <label>Vecuronium:</label>
+                        <span id="vecuronium-result">-</span>
+                    </div>
+                    <div class="note-field">Reconstitute with 10mL WFI</div>
                 </div>
 
                 <!-- Reversal Section -->
@@ -137,18 +206,27 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Sugammadex:</label>
-                    <span id="sugammadex-result">-</span>
+                    <div class="result-row">
+                        <label>Sugammadex:</label>
+                        <span id="sugammadex-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Flumazenil:</label>
-                    <span id="flumazenil-result">-</span>
+                    <div class="result-row">
+                        <label>Flumazenil:</label>
+                        <span id="flumazenil-result">-</span>
+                    </div>
+                    <div class="note-field">Every 60 seconds - max total dose 2000microg</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Naloxone:</label>
-                    <span id="naloxone-result">-</span>
+                    <div class="result-row">
+                        <label>Naloxone:</label>
+                        <span id="naloxone-result">-</span>
+                    </div>
+                    <div class="note-field">Every 2-3 mins - may be given IM</div>
                 </div>
 
                 <!-- Inotropes Section -->
@@ -157,23 +235,35 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Adrenaline:</label>
-                    <span id="inotrope-adrenaline-result">-</span>
+                    <div class="result-row">
+                        <label>Adrenaline:</label>
+                        <span id="inotrope-adrenaline-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 1mg to 50mL</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Noradrenaline:</label>
-                    <span id="inotrope-noradrenaline-result">-</span>
+                    <div class="result-row">
+                        <label>Noradrenaline:</label>
+                        <span id="inotrope-noradrenaline-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 75mg to 50mL</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Dobutamine:</label>
-                    <span id="dobutamine-result">-</span>
+                    <div class="result-row">
+                        <label>Dobutamine:</label>
+                        <span id="dobutamine-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 60mg to 50mL</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Dopamine:</label>
-                    <span id="dopamine-result">-</span>
+                    <div class="result-row">
+                        <label>Dopamine:</label>
+                        <span id="dopamine-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 1mg to 50mL</div>
                 </div>
 
                 <!-- Respiratory Section -->
@@ -182,33 +272,51 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Nebulized Adrenaline:</label>
-                    <span id="nebulized-adrenaline-result">-</span>
+                    <div class="result-row">
+                        <label>Nebulized Adrenaline:</label>
+                        <span id="nebulized-adrenaline-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Dexamethasone:</label>
-                    <span id="dexamethasone-result">-</span>
+                    <div class="result-row">
+                        <label>Dexamethasone:</label>
+                        <span id="dexamethasone-result">-</span>
+                    </div>
+                    <div class="note-field">IV or IM</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Hydrocortisone:</label>
-                    <span id="hydrocortisone-result">-</span>
+                    <div class="result-row">
+                        <label>Hydrocortisone:</label>
+                        <span id="hydrocortisone-result">-</span>
+                    </div>
+                    <div class="note-field">Reconstitute to 2mL WFI - 30 second IV push or IM</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Methylprednisolone:</label>
-                    <span id="methylprednisolone-result">-</span>
+                    <div class="result-row">
+                        <label>Methylprednisolone:</label>
+                        <span id="methylprednisolone-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 40mg to mL - push over 5 mins</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Magnesium Sulfate:</label>
-                    <span id="magnesium-result">-</span>
+                    <div class="result-row">
+                        <label>Magnesium Sulfate:</label>
+                        <span id="magnesium-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 10mmol to 50mL - infuse over 20 mins</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>IV Salbutamol:</label>
-                    <span id="salbutamol-result">-</span>
+                    <div class="result-row">
+                        <label>IV Salbutamol:</label>
+                        <span id="salbutamol-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 5mg to 100mL - infuse over 10 mins</div>
                 </div>
 
                 <!-- Neurology Section -->
@@ -217,23 +325,35 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Midazolam IV:</label>
-                    <span id="midazolam-iv-result">-</span>
+                    <div class="result-row">
+                        <label>Midazolam IV:</label>
+                        <span id="midazolam-iv-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute to 1mg/mL</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Midazolam IM:</label>
-                    <span id="midazolam-im-result">-</span>
+                    <div class="result-row">
+                        <label>Midazolam IM:</label>
+                        <span id="midazolam-im-result">-</span>
+                    </div>
+                    <div class="note-field">Undiluted</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Midazolam IN:</label>
-                    <span id="midazolam-in-result">-</span>
+                    <div class="result-row">
+                        <label>Midazolam IN:</label>
+                        <span id="midazolam-in-result">-</span>
+                    </div>
+                    <div class="note-field">Undiluted</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Levetiracetam:</label>
-                    <span id="levetiracetam-result">-</span>
+                    <div class="result-row">
+                        <label>Levetiracetam:</label>
+                        <span id="levetiracetam-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 500mg to 10mL - Push over 5 mins</div>
                 </div>
 
                 <!-- Analgesia Section -->
@@ -242,18 +362,27 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Fentanyl IN:</label>
-                    <span id="fentanyl-in-result">-</span>
+                    <div class="result-row">
+                        <label>Fentanyl IN:</label>
+                        <span id="fentanyl-in-result">-</span>
+                    </div>
+                    <div class="note-field">Repeat after 5 minutes if required</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Fentanyl IV:</label>
-                    <span id="fentanyl-iv-result">-</span>
+                    <div class="result-row">
+                        <label>Fentanyl IV:</label>
+                        <span id="fentanyl-iv-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 100microg to 10mL - repeat after 5 minutes if required</div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Morphine IV:</label>
-                    <span id="morphine-result">-</span>
+                    <div class="result-row">
+                        <label>Morphine IV:</label>
+                        <span id="morphine-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 10mg to 10mL - repeat after 5 minutes if required</div>
                 </div>
 
                 <!-- Trauma Section -->
@@ -262,13 +391,19 @@
                 </div>
                 
                 <div class="result-item">
-                    <label>Blood (mL):</label>
-                    <span id="blood-result">-</span>
+                    <div class="result-row">
+                        <label>Blood (mL):</label>
+                        <span id="blood-result">-</span>
+                    </div>
+                    <div class="note-field"></div>
                 </div>
                 
                 <div class="result-item">
-                    <label>Tranexamic Acid:</label>
-                    <span id="tranexamic-result">-</span>
+                    <div class="result-row">
+                        <label>Tranexamic Acid:</label>
+                        <span id="tranexamic-result">-</span>
+                    </div>
+                    <div class="note-field">Dilute 1000mg to 100mL - infuse over 10 minutes</div>
                 </div>
             </div>
         </div>
@@ -294,6 +429,12 @@
                     <label for="adrenaline-equation">Adrenaline (1:10,000):</label>
                     <input type="text" id="adrenaline-equation" placeholder="e.g., weight * 0.1">
                     <button onclick="saveEquation('adrenaline')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="adrenaline-push-equation">Adrenaline (Push dose pressor):</label>
+                    <input type="text" id="adrenaline-push-equation" placeholder="e.g., weight * 0.001">
+                    <button onclick="saveEquation('adrenaline-push')">Save</button>
                 </div>
                 
                 <div class="equation-group">
