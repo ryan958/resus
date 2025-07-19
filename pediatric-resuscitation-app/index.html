@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric Resuscitation Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showPage('calculator')">Calculator</button>
+            <button class="nav-tab" onclick="showPage('settings')">Settings</button>
+        </nav>
+
+        <!-- Calculator Page -->
+        <div id="calculator-page" class="page active">
+            <h1>Pediatric Resuscitation Calculator</h1>
+            
+            <div class="input-section">
+                <label for="age-input">Age (years):</label>
+                <input type="number" id="age-input" placeholder="Enter age" step="0.1" min="0" max="18">
+            </div>
+
+            <div class="results-section">
+                <h2>Calculated Doses</h2>
+                
+                <div class="result-item">
+                    <label>Weight (kg):</label>
+                    <span id="weight-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>ETT Size:</label>
+                    <span id="ett-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>ETT Depth (cm):</label>
+                    <span id="ett-depth-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Adrenaline (1:10,000):</label>
+                    <span id="adrenaline-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Amiodarone:</label>
+                    <span id="amiodarone-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Atropine:</label>
+                    <span id="atropine-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Calcium Gluconate:</label>
+                    <span id="calcium-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Defibrillation (J):</label>
+                    <span id="defib-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Fluid Bolus (mL):</label>
+                    <span id="fluid-result">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="page">
+            <h1>Calculation Settings</h1>
+            <p>Customize the equations used for calculations. Use 'age' as the variable.</p>
+            
+            <div class="settings-section">
+                <h2>Weight Calculation</h2>
+                <label for="weight-equation">Equation:</label>
+                <input type="text" id="weight-equation" placeholder="e.g., age * 2 + 8">
+                <button onclick="saveEquation('weight')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>ETT Size</h2>
+                <label for="ett-equation">Equation:</label>
+                <input type="text" id="ett-equation" placeholder="e.g., (age / 4) + 4">
+                <button onclick="saveEquation('ett')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>ETT Depth</h2>
+                <label for="ett-depth-equation">Equation:</label>
+                <input type="text" id="ett-depth-equation" placeholder="e.g., age / 2 + 12">
+                <button onclick="saveEquation('ett-depth')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Adrenaline (1:10,000)</h2>
+                <label for="adrenaline-equation">Equation:</label>
+                <input type="text" id="adrenaline-equation" placeholder="e.g., weight * 0.1">
+                <button onclick="saveEquation('adrenaline')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Amiodarone</h2>
+                <label for="amiodarone-equation">Equation:</label>
+                <input type="text" id="amiodarone-equation" placeholder="e.g., weight * 5">
+                <button onclick="saveEquation('amiodarone')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Atropine</h2>
+                <label for="atropine-equation">Equation:</label>
+                <input type="text" id="atropine-equation" placeholder="e.g., weight * 0.02">
+                <button onclick="saveEquation('atropine')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Calcium Gluconate</h2>
+                <label for="calcium-equation">Equation:</label>
+                <input type="text" id="calcium-equation" placeholder="e.g., weight * 0.2">
+                <button onclick="saveEquation('calcium')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Defibrillation</h2>
+                <label for="defib-equation">Equation:</label>
+                <input type="text" id="defib-equation" placeholder="e.g., weight * 4">
+                <button onclick="saveEquation('defib')">Save</button>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Fluid Bolus</h2>
+                <label for="fluid-equation">Equation:</label>
+                <input type="text" id="fluid-equation" placeholder="e.g., weight * 20">
+                <button onclick="saveEquation('fluid')">Save</button>
+            </div>
+            
+            <div class="settings-actions">
+                <button onclick="resetToDefaults()" class="reset-btn">Reset to Defaults</button>
+                <button onclick="loadSettings()" class="load-btn">Load Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
