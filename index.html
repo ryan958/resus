@@ -151,6 +151,31 @@
                     <span id="naloxone-result">-</span>
                 </div>
 
+                <!-- Inotropes Section -->
+                <div class="section-header">
+                    <h3>💉 Inotropes (initial)</h3>
+                </div>
+                
+                <div class="result-item">
+                    <label>Adrenaline:</label>
+                    <span id="inotrope-adrenaline-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Noradrenaline:</label>
+                    <span id="inotrope-noradrenaline-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Dobutamine:</label>
+                    <span id="dobutamine-result">-</span>
+                </div>
+                
+                <div class="result-item">
+                    <label>Dopamine:</label>
+                    <span id="dopamine-result">-</span>
+                </div>
+
                 <!-- Respiratory Section -->
                 <div class="section-header">
                     <h3>🫁 Respiratory</h3>
@@ -397,6 +422,35 @@
                     <label for="naloxone-equation">Naloxone:</label>
                     <input type="text" id="naloxone-equation" placeholder="e.g., weight * 0.01">
                     <button onclick="saveEquation('naloxone')">Save</button>
+                </div>
+            </div>
+
+            <!-- Inotropes Section -->
+            <div class="settings-section">
+                <h2>💉 Inotropes (initial)</h2>
+                
+                <div class="equation-group">
+                    <label for="inotrope-adrenaline-equation">Adrenaline:</label>
+                    <input type="text" id="inotrope-adrenaline-equation" placeholder="e.g., weight * 0.1">
+                    <button onclick="saveEquation('inotrope-adrenaline')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="inotrope-noradrenaline-equation">Noradrenaline:</label>
+                    <input type="text" id="inotrope-noradrenaline-equation" placeholder="e.g., weight * 0.05">
+                    <button onclick="saveEquation('inotrope-noradrenaline')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="dobutamine-equation">Dobutamine:</label>
+                    <input type="text" id="dobutamine-equation" placeholder="e.g., weight * 0.05">
+                    <button onclick="saveEquation('dobutamine')">Save</button>
+                </div>
+                
+                <div class="equation-group">
+                    <label for="dopamine-equation">Dopamine:</label>
+                    <input type="text" id="dopamine-equation" placeholder="e.g., weight * 0.05">
+                    <button onclick="saveEquation('dopamine')">Save</button>
                 </div>
             </div>
 
