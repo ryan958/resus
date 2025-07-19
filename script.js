@@ -218,7 +218,7 @@ function formatValue(type, value) {
         case 'weight':
             return value.toFixed(1) + ' kg';
         case 'ett':
-            return value.toFixed(1);
+            return Math.round(value * 2) / 2 + '';
         case 'ett-depth':
             return value.toFixed(1) + ' cm';
         case 'adrenaline':
