@@ -1,6 +1,5 @@
 // Default equations for pediatric resuscitation calculations
 const defaultEquations = {
-    weight: 'age * 2 + 8',
     ett: '(age / 4) + 4',
     'ett-depth': 'age / 2 + 12',
     adrenaline: 'weight * 0.1',
@@ -47,7 +46,8 @@ const defaultEquations = {
 let currentEquations = { ...defaultEquations };
 
 // DOM elements
-const ageInput = document.getElementById('age-input');
+const ageYearsInput = document.getElementById('age-years-input');
+const ageMonthsInput = document.getElementById('age-months-input');
 const weightInput = document.getElementById('weight-input');
 const resultElements = {
     weight: document.getElementById('weight-result'),
@@ -101,10 +101,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Set up event listeners
 function setupEventListeners() {
-    ageInput.addEventListener('input', calculateAll);
-    ageInput.addEventListener('keypress', function(e) {
+    ageYearsInput.addEventListener('input', calculateAll);
+    ageYearsInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            ageInput.blur();
+            ageYearsInput.blur();
+        }
+    });
+    ageMonthsInput.addEventListener('input', calculateAll);
+    ageMonthsInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            ageMonthsInput.blur();
         }
     });
     weightInput.addEventListener('input', calculateAll);
@@ -132,6 +138,29 @@ function showPage(pageName) {
     
     // Add active class to clicked nav tab
     event.target.classList.add('active');
+}
+
+// Convert years and months to decimal age
+function convertToDecimalAge(years, months) {
+    const yearsNum = parseFloat(years);
+    const monthsNum = parseFloat(months);
+    
+    // If both inputs are empty or NaN, return null
+    if ((years === '' || isNaN(yearsNum)) && (months === '' || isNaN(monthsNum))) {
+        return null;
+    }
+    
+    // Use 0 for empty inputs, but only if at least one input has a value
+    const yearsValue = years === '' || isNaN(yearsNum) ? 0 : yearsNum;
+    const monthsValue = months === '' || isNaN(monthsNum) ? 0 : monthsNum;
+    
+    // Validate inputs
+    if (yearsValue < 0 || monthsValue < 0 || monthsValue > 11) {
+        return null;
+    }
+    
+    // Convert to decimal age (e.g., 1 year 11 months = 1.917 years)
+    return yearsValue + (monthsValue / 12);
 }
 
 // Safe evaluation of mathematical expressions
@@ -164,10 +193,12 @@ function safeEval(expression, variables) {
 
 // Calculate all values based on age and/or actual weight
 function calculateAll() {
-    const age = parseFloat(ageInput.value);
+    const years = ageYearsInput.value;
+    const months = ageMonthsInput.value;
+    const age = convertToDecimalAge(years, months);
     const actualWeight = parseFloat(weightInput.value);
     
-    if ((isNaN(age) || age < 0 || age > 18) && (isNaN(actualWeight) || actualWeight <= 0)) {
+    if ((age === null || age < 0 || age > 18) && (isNaN(actualWeight) || actualWeight <= 0)) {
         clearResults();
         return;
     }
@@ -177,7 +208,18 @@ function calculateAll() {
     if (!isNaN(actualWeight) && actualWeight > 0) {
         weight = actualWeight;
     } else {
-        weight = safeEval(currentEquations.weight, { age });
+        // Calculate weight based on age ranges
+        if (age < 1) {
+            // Age < 1 year: (age in months x 0.5) + 4
+            const ageInMonths = age * 12;
+            weight = (ageInMonths * 0.5) + 4;
+        } else if (age >= 1 && age <= 5) {
+            // Age 1-5 years: (age in years x 2) + 8
+            weight = (age * 2) + 8;
+        } else {
+            // Age > 5: (age in years x 3) + 7
+            weight = (age * 3) + 7;
+        }
     }
     if (weight === null || isNaN(weight) || weight <= 0) {
         showMessage('Error calculating weight', 'error');
@@ -386,7 +428,9 @@ function saveEquation(type) {
     
     let testResult;
     if (type === 'weight') {
-        testResult = safeEval(equation, { age: testAge });
+        // Weight calculation is now handled automatically, not through equations
+        showMessage('Weight calculation is now automatic and cannot be customized', 'error');
+        return;
     } else {
         testResult = safeEval(equation, { age: testAge, weight: testWeight });
     }
@@ -403,7 +447,7 @@ function saveEquation(type) {
     showMessage('Equation saved successfully', 'success');
     
     // Recalculate if age is entered
-    if (ageInput.value) {
+    if (ageYearsInput.value || ageMonthsInput.value) {
         calculateAll();
     }
 }
@@ -445,10 +489,10 @@ function resetToDefaults() {
         
         showMessage('Reset to defaults successfully', 'success');
         
-        // Recalculate if age is entered
-        if (ageInput.value) {
-            calculateAll();
-        }
+            // Recalculate if age is entered
+    if (ageYearsInput.value || ageMonthsInput.value) {
+        calculateAll();
+    }
     }
 }
 
@@ -491,9 +535,10 @@ document.addEventListener('keydown', function(e) {
     
     // Escape to clear age input
     if (e.key === 'Escape') {
-        ageInput.value = '';
+        ageYearsInput.value = '';
+        ageMonthsInput.value = '';
         clearResults();
-        ageInput.focus();
+        ageYearsInput.focus();
     }
 });
 
@@ -514,13 +559,25 @@ if ('ontouchstart' in window) {
 }
 
 // Prevent zoom on input focus (mobile)
-ageInput.addEventListener('focus', function() {
+ageYearsInput.addEventListener('focus', function() {
     if (window.innerWidth <= 768) {
         document.body.style.fontSize = '16px';
     }
 });
 
-ageInput.addEventListener('blur', function() {
+ageYearsInput.addEventListener('blur', function() {
+    if (window.innerWidth <= 768) {
+        document.body.style.fontSize = '';
+    }
+});
+
+ageMonthsInput.addEventListener('focus', function() {
+    if (window.innerWidth <= 768) {
+        document.body.style.fontSize = '16px';
+    }
+});
+
+ageMonthsInput.addEventListener('blur', function() {
     if (window.innerWidth <= 768) {
         document.body.style.fontSize = '';
     }
