@@ -134,6 +134,29 @@ h3 {
     border-color: #3498db;
 }
 
+/* Age input group styling */
+.age-inputs {
+    margin-bottom: 15px;
+}
+
+.age-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.age-input-group input {
+    width: auto;
+    flex: 1;
+    min-width: 80px;
+}
+
+.age-separator {
+    color: #7f8c8d;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
 /* Results Section */
 .results-section {
     background: #f8f9fa;
@@ -365,6 +388,22 @@ h3 {
     
     .equation-group {
         padding: 10px;
+    }
+    
+    .age-input-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+    }
+    
+    .age-input-group input {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .age-separator {
+        text-align: center;
+        font-size: 14px;
     }
 }
 
