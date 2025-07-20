@@ -20,8 +20,15 @@
             <p class="attribution">Based on Queensland Health Children's Resuscitation Emergency Drug Dosage (CREDD) - 3rd Edition</p>
             
             <div class="input-section">
-                <label for="age-input">Age (years):</label>
-                <input type="number" id="age-input" placeholder="Enter age" step="0.1" min="0" max="18">
+                <div class="age-inputs">
+                    <label for="age-years-input">Age:</label>
+                    <div class="age-input-group">
+                        <input type="number" id="age-years-input" placeholder="Years" min="0" max="18">
+                        <span class="age-separator">years</span>
+                        <input type="number" id="age-months-input" placeholder="Months" min="0" max="11">
+                        <span class="age-separator">months</span>
+                    </div>
+                </div>
                 <label for="weight-input" style="margin-top:12px;">Actual Weight (kg) (optional):</label>
                 <input type="number" id="weight-input" placeholder="Enter actual weight if known" step="0.1" min="0">
             </div>
@@ -417,9 +424,15 @@
             <!-- Weight Section -->
             <div class="settings-section">
                 <h2>Weight Calculation</h2>
-                <label for="weight-equation">Equation:</label>
-                <input type="text" id="weight-equation" placeholder="e.g., age * 2 + 8">
-                <button onclick="saveEquation('weight')">Save</button>
+                <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 10px;">
+                    Weight is now calculated automatically based on age ranges:<br>
+                    • Age &lt; 1 year: (age in months × 0.5) + 4<br>
+                    • Age 1-5 years: (age in years × 2) + 8<br>
+                    • Age &gt; 5 years: (age in years × 3) + 7
+                </p>
+                <p style="color: #27ae60; font-size: 14px; font-weight: 500;">
+                    Note: You can still enter an actual weight in the calculator to override this calculation.
+                </p>
             </div>
 
             <!-- Resuscitation Section -->
