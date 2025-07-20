@@ -339,7 +339,7 @@ h3 {
 }
 
 /* Mobile Optimizations */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .container {
         margin: 0;
         box-shadow: none;
@@ -390,16 +390,19 @@ h3 {
         padding: 10px;
     }
     
-    .age-input-group {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
+    .input-section .age-input-group {
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
     }
     
-    .age-input-group input {
-        width: auto;
-        flex: 1;
-        min-width: 60px;
+    .input-section .age-input-group input {
+        width: auto !important;
+        flex: 1 !important;
+        min-width: 60px !important;
+        max-width: none !important;
     }
     
     .age-separator {
