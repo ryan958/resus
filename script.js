@@ -53,6 +53,7 @@ const resultElements = {
     weight: document.getElementById('weight-result'),
     ett: document.getElementById('ett-result'),
     'ett-depth': document.getElementById('ett-depth-result'),
+    lma: document.getElementById('lma-result'),
     adrenaline: document.getElementById('adrenaline-result'),
     defib: document.getElementById('defib-result'),
     fluid: document.getElementById('fluid-result'),
@@ -191,6 +192,25 @@ function safeEval(expression, variables) {
     }
 }
 
+// Calculate LMA size based on weight
+function calculateLMASize(weight) {
+    if (weight < 5) {
+        return 1;
+    } else if (weight >= 5 && weight <= 10) {
+        return 1.5;
+    } else if (weight >= 11 && weight <= 20) {
+        return 2;
+    } else if (weight >= 21 && weight <= 30) {
+        return 2.5;
+    } else if (weight >= 31 && weight <= 50) {
+        return 3;
+    } else if (weight > 50) {
+        return 4;
+    } else {
+        return null;
+    }
+}
+
 // Calculate all values based on age and/or actual weight
 function calculateAll() {
     const years = ageYearsInput.value;
@@ -226,20 +246,15 @@ function calculateAll() {
         return;
     }
 
-    // Estimate age from weight if age is missing for ETT calculations
-    let ettAge = age;
-    if ((isNaN(age) || age === 0) && (!isNaN(weight) && weight > 0)) {
-        ettAge = (weight - 8) / 2;
-    }
-    
-    // Use estimated age for all calculations if actual age is missing
-    let calcAge = isNaN(age) ? ettAge : age;
+    // Use actual age for calculations if available
+    let calcAge = (age === null || isNaN(age)) ? null : age;
     
     // Calculate all other values
     const calculations = {
         weight: weight,
-        ett: safeEval(currentEquations.ett, { age: ettAge }),
-        'ett-depth': safeEval(currentEquations['ett-depth'], { age: ettAge }),
+        ett: calcAge !== null ? safeEval(currentEquations.ett, { age: calcAge }) : null,
+        'ett-depth': calcAge !== null ? safeEval(currentEquations['ett-depth'], { age: calcAge }) : null,
+        lma: calculateLMASize(weight),
         adrenaline: safeEval(currentEquations.adrenaline, { age: calcAge, weight }),
         defib: safeEval(currentEquations.defib, { age: calcAge, weight }),
         fluid: safeEval(currentEquations.fluid, { age: calcAge, weight }),
@@ -288,7 +303,7 @@ function calculateAll() {
 function updateResults(calculations) {
     for (const [key, value] of Object.entries(calculations)) {
         const element = resultElements[key];
-        if (element && value !== null) {
+        if (element) {
             element.textContent = formatValue(key, value);
         }
     }
@@ -296,6 +311,17 @@ function updateResults(calculations) {
 
 // Format values for display
 function formatValue(type, value) {
+    // Handle null values
+    if (value === null) {
+        switch (type) {
+            case 'ett':
+            case 'ett-depth':
+                return 'Enter age';
+            default:
+                return '-';
+        }
+    }
+    
     // Handle range objects for inotropes and induction medications
     if (typeof value === 'object' && value.min !== undefined && value.max !== undefined) {
         switch (type) {
@@ -330,6 +356,8 @@ function formatValue(type, value) {
             return Math.floor(value * 2) / 2 + '';
         case 'ett-depth':
             return value.toFixed(1) + ' cm';
+        case 'lma':
+            return value + '';
         case 'adrenaline':
             return value.toFixed(1) + ' mL';
         case 'defib':
