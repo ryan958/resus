@@ -391,19 +391,21 @@ h3 {
     }
     
     .age-input-group {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 5px;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
     }
     
     .age-input-group input {
-        width: 100%;
-        min-width: auto;
+        width: auto;
+        flex: 1;
+        min-width: 60px;
     }
     
     .age-separator {
         text-align: center;
         font-size: 14px;
+        white-space: nowrap;
     }
 }
 
